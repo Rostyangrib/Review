@@ -37,4 +37,4 @@ if __name__ == '__main__':
     if not has_scraped:
         scrape_films()
         has_scraped = True
-    app.run(debug=False, host="0.0.0.0")
+    app.run(debug=False, host="0.0.0.0", port=5000)

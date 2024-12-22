@@ -2,7 +2,7 @@ import sqlite3
 import os
 
 def create_database_and_table():
-    if os.path.exists('Films.db'):
+    if os.path.exists('films.db'):
         print("База данных 'films.db' уже существует.")
         conn = sqlite3.connect('Films.db')
         cursor = conn.cursor()
@@ -30,7 +30,7 @@ def create_database_and_table():
             print("Таблица 'films' успешно создана.")
     else:
         print("Создание базы данных...")
-        conn = sqlite3.connect('Films.db')
+        conn = sqlite3.connect('films.db')
         cursor = conn.cursor()
         cursor.execute("""
             CREATE TABLE films (
@@ -48,7 +48,7 @@ def create_database_and_table():
 
 
 def get_filtered_films(keyword, time_of_day, age_rating):
-    conn = sqlite3.connect('Films.db')
+    conn = sqlite3.connect('films.db')
     cursor = conn.cursor()
 
     query = "SELECT * FROM films WHERE 1=1"

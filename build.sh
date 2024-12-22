@@ -4,7 +4,7 @@ echo "Building and starting the service..."
 
 docker-compose down
 
-docker-compose up --build -d
+docker-compose up --build
 
 docker-compose ps
 

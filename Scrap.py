@@ -14,7 +14,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 
 def clear_table():
-    conn = sqlite3.connect('Films.db')
+    conn = sqlite3.connect('films.db')
     cursor = conn.cursor()
     cursor.execute("DELETE FROM films")
     cursor.execute("DELETE FROM sqlite_sequence WHERE name='films'")
