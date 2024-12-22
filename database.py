@@ -1,10 +1,13 @@
 import sqlite3
 import os
 
+from Scrap import scrape_films
+
+
 def create_database_and_table():
     if os.path.exists('films.db'):
         print("База данных 'films.db' уже существует.")
-        conn = sqlite3.connect('Films.db')
+        conn = sqlite3.connect('films.db')
         cursor = conn.cursor()
 
         cursor.execute("""
@@ -85,4 +88,5 @@ def get_filtered_films(keyword, time_of_day, age_rating):
     cursor.close()
     conn.close()
     return films
+
 

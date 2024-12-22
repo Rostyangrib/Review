@@ -2,7 +2,12 @@ FROM python:3.8-slim
 
 
 
-COPY . .
+WORKDIR /app
+
+COPY . /app
+
+ENV PYTHONUNBUFFERED=1
+
 
 RUN apt-get update && apt-get install -y \
     wget \
@@ -26,7 +31,8 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 
 RUN pip install selenium webdriver_manager flask bs4
 
-CMD ["bash", "-c", "python database.py && flask run --host=0.0.0.0 --port=5000"]
+CMD ["python", "app.py"]
+
 
 
 

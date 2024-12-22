@@ -34,7 +34,5 @@ has_scraped = False
 
 if __name__ == '__main__':
     create_database_and_table()
-    if not has_scraped:
-        scrape_films()
-        has_scraped = True
-    app.run(debug=False, host="0.0.0.0", port=5000)
+    scrape_films()
+    app.run(debug=True, host="0.0.0.0", port=5000)

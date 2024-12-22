@@ -1,9 +1,12 @@
 services:
   flask:
-    build: .
-    command: flask run --host=0.0.0.0
-    environment:
-      - FLASK_APP=app.py
+    build:
+      context: .
     ports:
       - "5000:5000"
-
+    volumes:
+      - ./data:/app/data
+    environment:
+      - FLASK_APP=app
+    command: python app.py
+    container_name: flask-1

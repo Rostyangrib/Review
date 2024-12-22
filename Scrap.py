@@ -45,7 +45,7 @@ def scrape_films():
 
         films = soup.find_all('a', class_='releases-item NH6Te')
 
-        conn = sqlite3.connect('Films.db')
+        conn = sqlite3.connect('films.db')
         cursor = conn.cursor()
 
         for film in films:
