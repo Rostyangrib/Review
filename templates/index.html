@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Киноафиша</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .table {
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .table th {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+        }
+        .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+        img {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 5px;
+            background-color: #ffffff;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+<body class="p-4">
+    <div class="container">
+        <h1>Поиск фильмов в New Cinema</h1>
+        <form id="filterForm" class="mb-4 p-3 border rounded bg-white">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label for="keyword" class="form-label">Название</label>
+                    <input type="text" id="keyword" name="keyword" class="form-control" placeholder="Введите ключевое слово">
+                </div>
+
+                <div class="col-md-4">
+                    <label for="time_of_day" class="form-label">Время суток</label>
+                    <select id="time_of_day" name="time_of_day" class="form-select">
+                        <option value="">Выберите время суток</option>
+                        <option value="morning">Утром (06:00-12:00)</option>
+                        <option value="afternoon">Днем (12:00-18:00)</option>
+                        <option value="evening">Вечером (18:00-23:59)</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="age_rating" class="form-label">Возрастной рейтинг</label>
+                    <input type="text" id="age_rating" name="age_rating" class="form-control" placeholder="Например: 18+">
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-primary w-50">Найти</button>
+                </div>
+            </div>
+        </form>
+
+
+        <table class="table table-bordered mt-4">
+            <thead>
+                <tr>
+                    <th>Постер</th>
+                    <th>Название</th>
+                    <th>Жанр</th>
+                    <th>Время</th>
+                    <th>Возрастной рейтинг</th>
+                </tr>
+            </thead>
+            <tbody id="results">
+
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const form = document.getElementById('filterForm');
+        const resultsTable = document.getElementById('results');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+
+            const formData = new FormData(form);
+            const queryString = new URLSearchParams(formData).toString();
+
+
+            const response = await fetch(`/filter?${queryString}`);
+            const data = await response.json();
+
+
+            resultsTable.innerHTML = '';
+
+
+            if (data.message) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="5" class="text-center text-danger">${data.message}</td>`;
+                resultsTable.appendChild(row);
+            } else {
+                data.forEach(film => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td><img src="${film.image_url}" alt="${film.title}" style="width: 100px; height: auto;"></td>
+                        <td>${film.title}</td>
+                        <td>${film.genre}</td>
+                        <td>${film.time}</td>
+                        <td>${film.age_rating}</td>
+                    `;
+                    resultsTable.appendChild(row);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
